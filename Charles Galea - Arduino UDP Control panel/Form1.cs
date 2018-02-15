@@ -11,7 +11,8 @@ using System.Net;
 using System.Threading;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
+using System.IO;
+using Ini;
 //The source and destination port are the same !!!!
 
 namespace WindowsFormsApplication1
@@ -19,6 +20,16 @@ namespace WindowsFormsApplication1
     
     public partial class Form1 : Form
     {
+        /// <RElated to Ini Config file added 14.02.2018 >
+        String newMessage;
+        String newMessageA = "TEST1";
+        String newMessage1B = "TEST2";
+        String newMessageC = "Test SN Number 007";
+        /// </summary>
+
+
+
+
         Boolean Connection_TRY = false;
         Boolean TESTBB = true;
         String ID_Received = ".................";
@@ -76,11 +87,79 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            FOLDERS();
             Connect_button.Visible = false;
             Disconnect_button.Visible = false;
             FormClosing += new FormClosingEventHandler(Form1_FormClosing);
+            
+            String path21 = "config/config.ini";
+            if (File.Exists(path21))
+            {
+                Load__config_file();
+            }
+
         }
 
+        private void FOLDERS()
+        {
+
+            String path18 = "config";
+
+            if (Directory.Exists(path18))
+            {
+
+            }
+            else
+            {
+                DirectoryInfo di = Directory.CreateDirectory(path18);
+            }
+        }
+
+        private void Generate__config_file()
+        {
+            ///////GENERATEATE File to store set values to be loaded on startup
+            /////// Controller IP Address 
+            /////// Port
+            /////// ID 
+
+
+            IniFile ini = new IniFile("config/config.ini");// Create file  CHGA 14/2/2018 
+
+            ini.IniWriteValue("USER_VALUES", "File info ", "//File format created by Charles Galea 2018.");
+            ini.IniWriteValue("USER_VALUES", "File Created ", DateTime.Now.ToString());
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            ini.IniWriteValue("ID", "ID", newMessageC);
+
+            //String hourOn1 = comboBox16.Text;
+            ini.IniWriteValue("IP", "IP", destipTextBox.Text.ToString());
+
+
+            // String minOn1 = comboBox13.Text;
+            ini.IniWriteValue("PORT", "PORT", portTextBox.Text.ToString());
+        }
+        private void Load__config_file()
+        {
+            IniParser parser = new IniParser("config/config.ini");
+
+
+            //// Load Sunrise Stored values in timers.ini file 
+
+
+
+            newMessage = parser.GetSetting("ID", "ID");//// Load Sunrise hourOn1 Stored values in timers.ini file 
+
+            toolStripStatusLabel4.Text = newMessage.ToString();
+
+
+            newMessage = parser.GetSetting("IP", "IP");//// Load Sunrise minOn1 Stored values in timers.ini file 
+
+            destipTextBox.Text = newMessage.ToString();
+
+            newMessage = parser.GetSetting("PORT", "PORT");//// Load Sunrise minOn1 Stored values in timers.ini file 
+
+            portTextBox.Text = newMessage.ToString();
+        }
 
         //Receiving UDP packets Thread
         private void receiveUDP()
@@ -265,6 +344,7 @@ namespace WindowsFormsApplication1
             if(AUTO == true)
             {
                 CHARLES_test();
+                Application.DoEvents();
             }
         }
 
@@ -534,7 +614,8 @@ namespace WindowsFormsApplication1
 
             //}
             label34.Text = ID_Received;
-
+            Generate__config_file();
+            Application.DoEvents();
         }
 
         private void Disconnect_button_Click(object sender, EventArgs e)
@@ -544,6 +625,12 @@ namespace WindowsFormsApplication1
             Disconnect_button.Visible = false;
             Connect_button.Visible = true;
             label34.Text = ".............";
+            Application.DoEvents();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            ///sjadhfkashdökfhsaöihföisdahföiuhsaduif
         }
     }
 }
