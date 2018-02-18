@@ -576,16 +576,16 @@ namespace WindowsFormsApplication1
                 var builder = new StringBuilder();
                 Array.ForEach(HZT, x => builder.Append(x));
                 var result = String.Join(":", HZT.ToArray());
-                var res = builder.ToString();
-                var vfr = result.ToString();
+       //         var res = builder.ToString();
+         //       var vfr = result.ToString();
                 Count++;
-                richTextBox2.Text = res;
+                richTextBox2.Text = result;
                 byte[] command = Encoding.UTF8.GetBytes(result); //res; // Encoding.ASCII.GetBytes(res);      //nevermind lower or upper - case....
                 udpclient.Send(command, command.Length, sourceipendpoint);
                 label32.Text = result.ToString();
                
 
-                //  udpclient.Send(Buffer, Buffer.Length, sourceipendpoint);
+
             }
 
             catch
