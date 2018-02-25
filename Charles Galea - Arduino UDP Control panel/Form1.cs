@@ -27,8 +27,8 @@ namespace WindowsFormsApplication1
         String newMessageC = "Test SN Number 007";
         /// </summary>
 
-
-
+        String FIRST_LETTER;	// First Character of the UDP packet - can be (W) rest unused
+        string[] parts = new String[55];
 
         Boolean Connection_TRY = false;
         Boolean TESTBB = true;
@@ -181,39 +181,62 @@ namespace WindowsFormsApplication1
 
                 {
 
-                        returnData = "--------";
+                        returnData = "W:--------";
                         remoteIP = string.Empty;
                         this.Invoke(new EventHandler(statusExpress));
                         
                 }
             }
         }
+        private void UDP_Check_First_Digit()
+        {
 
 
+
+            if (FIRST_LETTER == "W")
+            {
+
+            //    label34.Text = (parts[1]);
+
+            }
+
+            else
+            {
+                //      richTextBox2.Text += parts[1];
+                //     richTextBox2.Text += " \r\n";
+            }
+
+        }
+        
         private void statusExpress(object sender, EventArgs e)
         {
-            if (Connection_TRY == true)
+
+                string str = returnData;
+
+                char[] seps = { ':' };
+
+              parts = str.Split(seps);
+
+            FIRST_LETTER = (parts[0]);
+            if (FIRST_LETTER == "W")
             {
-                toolStripStatusLabel1.Text = returnData;
-                toolStripStatusLabel2.Text = remoteIP;
-               statusLabel.Text = "Connected";
-                recipTextBox.Text = remoteIP;
-                
-                richTextBox2.Text = returnData;
-                ID_Received = toolStripStatusLabel1.Text.ToString();
-                
+
+                 label34.Text = (parts[1]);
                 return;
-                
             }
 
-            else 
+            else if (FIRST_LETTER == "Z")
             {
-                statusLabel.Text = returnData;
-                recipTextBox.Text = remoteIP;
-                
+                richTextBox2.Text = parts[1].ToString();
+                richTextBox2.Text += " \r\n";
+                return;
             }
-            Connection_TRY = false;
 
+            else
+            {
+                return;
+            }
+      
         }
         private void sendButton_Click(object sender, EventArgs e)
         {
