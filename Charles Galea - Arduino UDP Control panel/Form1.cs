@@ -28,6 +28,7 @@ namespace WindowsFormsApplication1
         /// </summary>
 
         String FIRST_LETTER;	// First Character of the UDP packet - can be (W) rest unused
+        int Second_DIGIT = 0;
         string[] parts = new String[55];
 
         Boolean Connection_TRY = false;
@@ -211,21 +212,54 @@ namespace WindowsFormsApplication1
         private void statusExpress(object sender, EventArgs e)
         {
 
-                string str = returnData;
+            string str = returnData;
 
-                char[] seps = { ':' };
+            char[] seps = { ':' };
 
-              parts = str.Split(seps);
+            parts = str.Split(seps);
 
             FIRST_LETTER = (parts[0]);
-            if (FIRST_LETTER == "W")
-            {
+            Second_DIGIT = Int16.Parse(parts[1]);
 
-                 label34.Text = (parts[1]);
+            if (FIRST_LETTER == "W") // W ONLY AFTER Connection / disconnection request 
+            {
+                switch (Second_DIGIT)
+                {
+                    case 100:// After connection First Reply
+                        {
+                            System.Console.WriteLine("Low number");
+                            break;
+                        }
+                    case 200:// Board FW Version Received
+                        {
+                            System.Console.WriteLine("Low number");
+                            break;
+                        }
+                    case 050:// Board FW Programmed date
+                        {
+                            System.Console.WriteLine("Low number");
+                            break;
+                        }
+
+                    case 150:// BOARD CPU SN  
+                        {
+                            System.Console.WriteLine("Medium number");
+                            break;
+                        }
+                    default:// Unknown Commanr received by Controller
+                        {
+                            System.Console.WriteLine("Other number");
+                            break;
+                        }
+                }
+
+
+
+                label34.Text = (parts[1]);
                 return;
             }
 
-            else if (FIRST_LETTER == "Z")
+            else if (FIRST_LETTER == "Z")// Z Aknowledge 
             {
                 richTextBox2.Text = parts[1].ToString();
                 richTextBox2.Text += " \r\n";
@@ -236,7 +270,7 @@ namespace WindowsFormsApplication1
             {
                 return;
             }
-      
+
         }
         private void sendButton_Click(object sender, EventArgs e)
         {

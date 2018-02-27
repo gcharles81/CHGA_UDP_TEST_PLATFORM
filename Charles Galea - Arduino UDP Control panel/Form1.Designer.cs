@@ -5797,7 +5797,7 @@
             // Connect_button
             // 
             this.Connect_button.BackColor = System.Drawing.Color.Orange;
-            this.Connect_button.Location = new System.Drawing.Point(211, 6);
+            this.Connect_button.Location = new System.Drawing.Point(211, 7);
             this.Connect_button.Name = "Connect_button";
             this.Connect_button.Size = new System.Drawing.Size(88, 42);
             this.Connect_button.TabIndex = 18;
@@ -5808,7 +5808,7 @@
             // Disconnect_button
             // 
             this.Disconnect_button.BackColor = System.Drawing.Color.Red;
-            this.Disconnect_button.Location = new System.Drawing.Point(211, 54);
+            this.Disconnect_button.Location = new System.Drawing.Point(211, 55);
             this.Disconnect_button.Name = "Disconnect_button";
             this.Disconnect_button.Size = new System.Drawing.Size(88, 44);
             this.Disconnect_button.TabIndex = 23;
